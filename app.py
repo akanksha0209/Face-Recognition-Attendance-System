@@ -352,44 +352,48 @@ def mark_attendance():
     current_day = datetime.today().weekday()
     # 0 is monday and 6 is sunday
 
-    attendance = Attendance()
-    for name in names:  # note: name contains the unique id of a teacher/student
-        for teacher in teachers:
-            if teacher.teacher_id == name:
-                subject = TimeTable.query.filter_by(teacher=name, period=period,
-                                                    day=current_day).first()  # searches for
-                # which subject is being taught in the particular class
-                teacher_name = name
-                print(f'subject is {subject}')
+    #if the time doesnt fall into any of the slots mentioned, it will skip
+    # the rest of the function
+    if period:
+
+        attendance = Attendance()
+        for name in names:  # note: name contains the unique id of a teacher/student
+            for teacher in teachers:
+                if teacher.teacher_id == name:
+                    subject = TimeTable.query.filter_by(teacher=name, period=period,
+                                                        day=current_day).first()  # searches for
+                    # which subject is being taught in the particular class
+                    teacher_name = name
+                    print(f'subject is {subject}')
 
 
-    # updates the total no of classes completed in the subject
-    no_of_classes_update = Teacher.query.filter_by(teacher_id=teacher_name,
-                                                   semester=subject.semester,
-                                                   class_handled=f'{subject}').first()
+        # updates the total no of classes completed in the subject
+        no_of_classes_update = Teacher.query.filter_by(teacher_id=teacher_name,
+                                                       semester=subject.semester,
+                                                       class_handled=f'{subject}').first()
 
-    if no_of_classes_update.no_of_classes is None:
-        no_of_classes_update.no_of_classes = 1
-    else:
-        no_of_classes_update.no_of_classes = no_of_classes_update.no_of_classes + 1
+        if no_of_classes_update.no_of_classes is None:
+            no_of_classes_update.no_of_classes = 1
+        else:
+            no_of_classes_update.no_of_classes = no_of_classes_update.no_of_classes + 1
 
-    db.session.commit()
-    # marks attendance
-    for name in names:
-        exists = Attendance.query.filter_by(subject=f'{subject}', date=today, student_id=name).first()
+        db.session.commit()
+        # marks attendance
+        for name in names:
+            exists = Attendance.query.filter_by(subject=f'{subject}', date=today, student_id=name).first()
 
-        f = exists
+            f = exists
 
-        if f is None:
+            if f is None:
 
-            student_name = Student.query.filter_by(student_id=f'{name}').first()
-            if student_name is None:  # if its a teacherid doesn't mark attendance
-                pass
-            else:
-                attendance.add_attendance_student(student_name.first_name, student_name.last_name,
-                                                  student_name.student_id,
-                                                  f'{subject}', student_name.semester, student_name.branch,
-                                                  today)
+                student_name = Student.query.filter_by(student_id=f'{name}').first()
+                if student_name is None:  # if its a teacherid doesn't mark attendance
+                    pass
+                else:
+                    attendance.add_attendance_student(student_name.first_name, student_name.last_name,
+                                                      student_name.student_id,
+                                                      f'{subject}', student_name.semester, student_name.branch,
+                                                      today)
 
 
 # camera class to recognise faces
