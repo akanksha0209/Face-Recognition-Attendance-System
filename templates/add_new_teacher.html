@@ -1,0 +1,52 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'base.html' %}
+
+{% block title %}Add/Delete Teacher{% endblock %}
+
+{% block content %}
+
+
+            <section id="one" class="main style1">
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>
+									Teacher Registration
+
+
+								</h2>
+
+
+							</header>
+
+						{{ wtf.quick_form(form) }}
+							<h4>
+								Please wait while image is captured and your gender is auto detected.
+
+							</h4>
+							<h5>
+								Make sure your face is at a good distance from the webcam and there is enough lighting.
+							</h5>
+
+
+				</div>
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>
+									Teacher Registration
+
+
+								</h2>
+
+
+							</header>
+
+						{{ wtf.quick_form(remove_form) }}
+						</div>
+						</div>
+				</div>
+			</section>
+
+{% endblock %}
+

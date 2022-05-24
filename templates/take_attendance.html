@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Take Attendance{% endblock %}
+
+
+{% block content %}
+
+          <section id="one" class="main style1">
+				<div  class="container">
+
+
+							<header  class="major">
+								<h2 >
+									Take Attendance
+
+								</h2>
+								<h5>
+									Please wait while the camera gets activated.
+
+								</h5>
+
+
+
+								<div style="justify-content:centre; display:flex; margin-top:60px">
+									<img src="{{ url_for('video_feed') }}" width="160%">
+
+								</div>
+
+
+
+
+							</header>
+
+								<ul class="actions special">
+							<li></li><a class="btn" href="{{ url_for('return_home' )}}">Done</a></li>
+							</ul>
+
+
+
+							</div>
+
+		  </section>
+
+
+{% endblock %}
