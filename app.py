@@ -1,5 +1,5 @@
 import time
-from flask import Flask, render_template, url_for, redirect, Response
+from flask import Flask, render_template, url_for, flash, redirect, Response
 from datetime import datetime
 import cv2
 import os
@@ -352,7 +352,7 @@ def mark_attendance():
     current_day = datetime.today().weekday()
     # 0 is monday and 6 is sunday
 
-    #if the time doesnt fall into any of the slots mentioned, it will skip
+    # if the time doesnt fall into any of the slots mentioned, it will skip
     # the rest of the function
     if period:
 
@@ -365,7 +365,6 @@ def mark_attendance():
                     # which subject is being taught in the particular class
                     teacher_name = name
                     print(f'subject is {subject}')
-
 
         # updates the total no of classes completed in the subject
         no_of_classes_update = Teacher.query.filter_by(teacher_id=teacher_name,
@@ -434,7 +433,7 @@ class Camera(object):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         face_rects = face_classifier.detectMultiScale(gray, 1.3, 5)
         imgs = cv2.resize(image, (0, 0), None, 0.25, 0.25)
-        imgs= cv2.cvtColor(imgs, cv2.COLOR_BGR2RGB)
+        imgs = cv2.cvtColor(imgs, cv2.COLOR_BGR2RGB)
         facesin_cur_frame = face_recognition.face_locations(imgs)
         encodes_cur_frame = face_recognition.face_encodings(imgs, facesin_cur_frame)
         for encode_face, face_loc in zip(encodes_cur_frame, facesin_cur_frame):
@@ -542,7 +541,6 @@ def login():
             for student in students:
                 print(student)
                 if login_form.username.data == f'{student}' and login_form.password.data == student.password:
-
                     return render_template('student_home.html')
                 # else:
                 #     return render_template('login.html', form=login_form)
@@ -647,22 +645,29 @@ def add_new_student():
         print(first_name)
         last_name = form.last_name.data
         student_id = form.student_id.data
-        dob = form.dob.data
-        semester = form.semester.data
-        branch = form.branch.data
-        photo_url, gender = detect_faces(student_id, first_name, last_name)
+        student = Student.query.filter_by(student_id=student_id).first()
+        if student:
+            flash('Student ID already taken')
+            return render_template('add_new_student.html', form=form, remove_form=remove_form)
+        else:
+            dob = form.dob.data
+            semester = form.semester.data
+            branch = form.branch.data
+            photo_url, gender = detect_faces(student_id, first_name, last_name)
 
-        s = Student()
-        # adds new student
-        s.add_student(first_name=first_name, last_name=last_name,
-                      student_id=student_id, dob=dob, gender=gender, semester=semester,
-                      branch=branch, photo_url=photo_url)
-        l = StudentLogins()
-        password = f'{first_name}{dob}{last_name}'
-        l.add_student_login_detail(student_id=student_id, password=password)
-        time.sleep(2)
 
-        return redirect(url_for('verify_image', person_id=student_id))
+            s = Student()
+
+            # adds new student
+            s.add_student(first_name=first_name, last_name=last_name,
+                          student_id=student_id, dob=dob, gender=gender, semester=semester,
+                          branch=branch, photo_url=photo_url)
+            l = StudentLogins()
+            password = f'{first_name}{dob}{last_name}'
+            l.add_student_login_detail(student_id=student_id, password=password)
+            time.sleep(2)
+
+            return redirect(url_for('verify_image', person_id=student_id))
     if remove_form.validate_on_submit():
         student_id = form.student_id.data
         s = Student()

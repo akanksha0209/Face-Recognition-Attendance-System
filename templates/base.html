@@ -22,7 +22,17 @@
 				<div class="inner">
 					<span class="icon solid major fa-cloud" style="top:-40px"></span>
 				</div>
+
 			</section>
+        {% with messages = get_flashed_messages() %}
+                   {% if messages %}
+				   <ul class=flashes>
+                     {% for message in messages %}
+					   <li>{{ message }}</li>
+                     {% endfor %}
+                   </ul>
+                   {% endif %}
+			{% endwith %}
 {% block content %}
 {% endblock %}
 
