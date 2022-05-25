@@ -655,7 +655,6 @@ def add_new_student():
             branch = form.branch.data
             photo_url, gender = detect_faces(student_id, first_name, last_name)
 
-
             s = Student()
 
             # adds new student
