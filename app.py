@@ -386,7 +386,7 @@ def mark_attendance():
             if f is None:
 
                 student_name = Student.query.filter_by(student_id=f'{name}').first()
-                if student_name is None:  # if its a teacherid doesn't mark attendance
+                if student_name is None:  # if it's a teacher id, attendance is not marked
                     pass
                 else:
                     attendance.add_attendance_student(student_name.first_name, student_name.last_name,
