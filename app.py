@@ -598,7 +598,8 @@ def view_my_attendance():
 def view_attendance():
     class_attendance_form = ClassAttendance()
     student_attendance_form = StudentAttendance()
-    if class_attendance_form.validate_on_submit():  # if teacher wants the class attendance for a particular day
+    if class_attendance_form.validate_on_submit():
+        # if teacher wants the class attendance for a particular day
         date_required = class_attendance_form.date.data
         subject = class_attendance_form.subject.data
         branch = class_attendance_form.branch.data
@@ -610,7 +611,8 @@ def view_attendance():
         date = Attendance.query.filter_by(date=date_required).first()
         if students_present_on_date:
             return render_template('class_attendance.html', all_students_present=students_present_on_date, date=date)
-    if student_attendance_form.validate_on_submit():  # if teacher wants the student attendance for a particular subject
+    elif student_attendance_form.validate_on_submit():
+        # if teacher wants the student attendance for a particular subject
         student_id_required = student_attendance_form.student_id.data
         subject = student_attendance_form.subject.data
         details = Student.query.filter_by(student_id=student_id_required).first()
