@@ -1,12 +1,12 @@
 # Face-Recognition-Attendance-System
 A smart face recognition based attendance system which registers attendance by recognising the students' faces.
 Steps to run my project:
-1)install cmake for your laptop from here https://cmake.org/download/  
-  Be sure to download the Windows i386 Installer of the latest version(3.23.2)
-2)install visual studio setup 2022 from this link https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false
- While installing make sure to install python development, node.js development and desktop development with c++ packages.
-3)git clone https://github.com/akanksha0209/Face-Recognition-Attendance-System.git
-4)in the terminal type pip3 install -r requireemnts.txt
-5) once all the packages and dependencies are installed, run the app.py file and click on the http link in the terminal
-6) click login and the credentials for admin are username:admin and password:ab
-7) the credentials for student login is the registered student_id as username and password is in the format of their {firs_name}{dob}{last_name}.
+1)install cmake for your laptop from here https://cmake.org/download/    <br/>
+  Be sure to download the Windows i386 Installer of the latest version(3.23.2)  <br/>
+2)install visual studio setup 2022 from this link https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false   <br/>
+ While installing make sure to install python development, node.js development and desktop development with c++ packages.  <br/>
+3)git clone https://github.com/akanksha0209/Face-Recognition-Attendance-System.git   <br/>
+4)in the terminal type pip3 install -r requireemnts.txt <br/>
+5) once all the packages and dependencies are installed, run the app.py file and click on the http link in the terminal  <br/>
+6) click login and the credentials for admin are username:admin and password:ab  <br/>
+7) the credentials for student login is the registered student_id as username and password is in the format of their {firs_name}{dob}{last_name}.  <br/>
