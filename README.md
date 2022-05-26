@@ -4,6 +4,7 @@ Steps to run my project: <br/>
 1)install CMake for your laptop from here https://cmake.org/download/    <br/>
   Be sure to download the Windows i386 Installer of the latest release(3.23.2)  <br/>
 2)install visual studio setup 2022 from this link https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false   <br/>
+or community version for windows from here https://visualstudio.microsoft.com/downloads/    <br/>
  While installing make sure to install python development, desktop development with c++ packages and node.js development .  <br/>
 3)git clone https://github.com/akanksha0209/Face-Recognition-Attendance-System.git   <br/>
 4)in the terminal type: pip3 install -r requirements.txt <br/>
