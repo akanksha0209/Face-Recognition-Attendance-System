@@ -542,8 +542,6 @@ def login():
                 print(student)
                 if login_form.username.data == f'{student}' and login_form.password.data == student.password:
                     return render_template('student_home.html')
-                # else:
-                #     return render_template('login.html', form=login_form)
 
     return render_template('login.html', form=login_form)
 
@@ -567,7 +565,7 @@ def return_home():
     return render_template('home.html')
 
 
-# used by student to view attendance
+# used by student to their view attendance
 @app.route('/view_my_attendance', methods=["GET", "POST"])
 def view_my_attendance():
     student_attendance_form = StudentAttendance()
