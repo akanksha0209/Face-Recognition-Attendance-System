@@ -8,6 +8,6 @@ or community version for windows from here https://visualstudio.microsoft.com/do
  While installing make sure to install python development, desktop development with c++ packages and node.js development .  <br/>
 3)git clone https://github.com/akanksha0209/Face-Recognition-Attendance-System.git   <br/>
 4)in the terminal type: pip3 install -r requirements.txt <br/>
-5) once all the packages and dependencies are installed, run the app.py file and click on the http link in the terminal  <br/>
+5) once all the packages and dependencies are installed, run the app.py file and click on the http link in the terminal   <br/>
 6) click login and the credentials for admin are username:admin and password:ab  <br/>
 7) the credentials for student login is the registered student_id as username and password is in the format of their {first_name}{dob}{last_name}.  <br/>
