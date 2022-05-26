@@ -2,7 +2,7 @@
 A smart face recognition based attendance system which registers attendance by recognising the students' faces.
 Steps to run my project:
 1)install cmake for your laptop from here https://cmake.org/download/    <br/>
-  Be sure to download the Windows i386 Installer of the latest version(3.23.2)  <br/>
+  Be sure to download the Windows i386 Installer of the latest release(3.23.2)  <br/>
 2)install visual studio setup 2022 from this link https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false   <br/>
  While installing make sure to install python development, desktop development with c++ packages and node.js development .  <br/>
 3)git clone https://github.com/akanksha0209/Face-Recognition-Attendance-System.git   <br/>
