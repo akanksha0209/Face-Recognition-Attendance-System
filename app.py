@@ -565,41 +565,46 @@ def return_home():
     return render_template('home.html')
 
 
-# used by student to their view attendance
-@app.route('/view_my_attendance', methods=["GET", "POST"])
-def view_my_attendance():
+# used by by student and teachers to view students' attendance
+@app.route('/view_student_attendance', methods=["GET", "POST"])
+def view_student_attendance():
     student_attendance_form = StudentAttendance()
     if student_attendance_form.validate_on_submit():
         student_id_required = student_attendance_form.student_id.data
         subject = student_attendance_form.subject.data
+        no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
         details = Student.query.filter_by(student_id=student_id_required).first()
-        if details:
+        if details and no_of_classes:
+            total_no_of_classes = ''
             semester = details.semester
             branch = details.branch
 
             classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
             classes = Teacher.query.filter_by(class_handled=subject, semester=semester,
                                               branch=branch).first()
-            total_no_of_classes = classes.no_of_classes
+            if classes:
+                total_no_of_classes = classes.no_of_classes
 
-            no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
             name = Attendance.query.filter_by(student_id=student_id_required).first()
             no_of_classes_attended = len(no_of_classes)
             return render_template('student_attendance.html', all_classes_attended=classes_attended,
                                    name=name, no_of_classes_attended=no_of_classes_attended,
                                    total_no_of_classes=total_no_of_classes)
+        else:
+            flash('No attendance found for the student')
+            return render_template('view_student_attendance.html',
+                                   student_attendance_form=student_attendance_form)
 
-    return render_template('view_attendance.html',
+    return render_template('view_student_attendance.html',
                            student_attendance_form=student_attendance_form)
 
 
 # used by teacher to view attendance
-@app.route('/view_attendance', methods=["GET", "POST"])
-def view_attendance():
+@app.route('/view_class_attendance', methods=["GET", "POST"])
+def view_class_attendance():
     class_attendance_form = ClassAttendance()
-    student_attendance_form = StudentAttendance()
+    # if teacher wants the class attendance for a particular day
     if class_attendance_form.validate_on_submit():
-        # if teacher wants the class attendance for a particular day
         date_required = class_attendance_form.date.data
         subject = class_attendance_form.subject.data
         branch = class_attendance_form.branch.data
@@ -611,30 +616,8 @@ def view_attendance():
         date = Attendance.query.filter_by(date=date_required).first()
         if students_present_on_date:
             return render_template('class_attendance.html', all_students_present=students_present_on_date, date=date)
-    elif student_attendance_form.validate_on_submit():
-        # if teacher wants the student attendance for a particular subject
-        student_id_required = student_attendance_form.student_id.data
-        subject = student_attendance_form.subject.data
-        details = Student.query.filter_by(student_id=student_id_required).first()
-        if details:
-            semester = details.semester
-            branch = details.branch
 
-            classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
-            classes = Teacher.query.filter_by(class_handled=subject, semester=semester,
-                                              branch=branch).first()
-            total_no_of_classes = classes.no_of_classes
-
-            no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
-            name = Attendance.query.filter_by(student_id=student_id_required).first()
-            no_of_classes_attended = len(no_of_classes)
-
-            return render_template('student_attendance.html', all_classes_attended=classes_attended,
-                                   name=name, no_of_classes_attended=no_of_classes_attended,
-                                   total_no_of_classes=total_no_of_classes)
-
-    return render_template('view_attendance.html', class_attendance_form=class_attendance_form,
-                           student_attendance_form=student_attendance_form)
+    return render_template('view_class_attendance.html', class_attendance_form=class_attendance_form)
 
 
 # when faculty member is registering the student during admission process

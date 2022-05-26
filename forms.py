@@ -68,7 +68,3 @@ class VerifiedImage(FlaskForm):
 class RetakeImage(FlaskForm):
     submit2 = SubmitField(label='Retake')
 
-class MyAttendanceForm(FlaskForm):
-    student_id=StringField(label='Student ID', validators=[DataRequired()])
-    subject=StringField(label='Subject', validators=[DataRequired()])
-    submit=SubmitField(label='Submit')
