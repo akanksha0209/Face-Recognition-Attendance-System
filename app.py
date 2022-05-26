@@ -574,11 +574,11 @@ def view_my_attendance():
         subject = student_attendance_form.subject.data
         details = Student.query.filter_by(student_id=student_id_required).first()
         if details:
-            year = details.semester
+            semester = details.semester
             branch = details.branch
 
             classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
-            classes = Teacher.query.filter_by(class_handled=subject, semester=year,
+            classes = Teacher.query.filter_by(class_handled=subject, semester=semester,
                                               branch=branch).first()
             total_no_of_classes = classes.no_of_classes
 
@@ -617,11 +617,11 @@ def view_attendance():
         subject = student_attendance_form.subject.data
         details = Student.query.filter_by(student_id=student_id_required).first()
         if details:
-            year = details.semester
+            semester = details.semester
             branch = details.branch
 
             classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
-            classes = Teacher.query.filter_by(class_handled=subject, semester=year,
+            classes = Teacher.query.filter_by(class_handled=subject, semester=semester,
                                               branch=branch).first()
             total_no_of_classes = classes.no_of_classes
 
