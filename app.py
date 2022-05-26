@@ -573,20 +573,21 @@ def view_my_attendance():
         student_id_required = student_attendance_form.student_id.data
         subject = student_attendance_form.subject.data
         details = Student.query.filter_by(student_id=student_id_required).first()
-        year = details.semester
-        branch = details.branch
+        if details:
+            year = details.semester
+            branch = details.branch
 
-        classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
-        classes = Teacher.query.filter_by(class_handled=subject, semester=year,
-                                          branch=branch).first()
-        total_no_of_classes = classes.no_of_classes
+            classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
+            classes = Teacher.query.filter_by(class_handled=subject, semester=year,
+                                              branch=branch).first()
+            total_no_of_classes = classes.no_of_classes
 
-        no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
-        name = Attendance.query.filter_by(student_id=student_id_required).first()
-        no_of_classes_attended = len(no_of_classes)
-        return render_template('student_attendance.html', all_classes_attended=classes_attended,
-                               name=name, no_of_classes_attended=no_of_classes_attended,
-                               total_no_of_classes=total_no_of_classes)
+            no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
+            name = Attendance.query.filter_by(student_id=student_id_required).first()
+            no_of_classes_attended = len(no_of_classes)
+            return render_template('student_attendance.html', all_classes_attended=classes_attended,
+                                   name=name, no_of_classes_attended=no_of_classes_attended,
+                                   total_no_of_classes=total_no_of_classes)
 
     return render_template('view_attendance.html',
                            student_attendance_form=student_attendance_form)
@@ -607,27 +608,28 @@ def view_attendance():
                                                               semester=year, branch=branch)
 
         date = Attendance.query.filter_by(date=date_required).first()
-
-        return render_template('class_attendance.html', all_students_present=students_present_on_date, date=date)
+        if students_present_on_date:
+            return render_template('class_attendance.html', all_students_present=students_present_on_date, date=date)
     if student_attendance_form.validate_on_submit():  # if teacher wants the student attendance for a particular subject
         student_id_required = student_attendance_form.student_id.data
         subject = student_attendance_form.subject.data
         details = Student.query.filter_by(student_id=student_id_required).first()
-        year = details.semester
-        branch = details.branch
+        if details:
+            year = details.semester
+            branch = details.branch
 
-        classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
-        classes = Teacher.query.filter_by(class_handled=subject, semester=year,
-                                          branch=branch).first()
-        total_no_of_classes = classes.no_of_classes
+            classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
+            classes = Teacher.query.filter_by(class_handled=subject, semester=year,
+                                              branch=branch).first()
+            total_no_of_classes = classes.no_of_classes
 
-        no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
-        name = Attendance.query.filter_by(student_id=student_id_required).first()
-        no_of_classes_attended = len(no_of_classes)
+            no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
+            name = Attendance.query.filter_by(student_id=student_id_required).first()
+            no_of_classes_attended = len(no_of_classes)
 
-        return render_template('student_attendance.html', all_classes_attended=classes_attended,
-                               name=name, no_of_classes_attended=no_of_classes_attended,
-                               total_no_of_classes=total_no_of_classes)
+            return render_template('student_attendance.html', all_classes_attended=classes_attended,
+                                   name=name, no_of_classes_attended=no_of_classes_attended,
+                                   total_no_of_classes=total_no_of_classes)
 
     return render_template('view_attendance.html', class_attendance_form=class_attendance_form,
                            student_attendance_form=student_attendance_form)
