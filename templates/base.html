@@ -7,11 +7,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
-
-
-
-
-
+		<style>
+			.flash-message{
+			background-color:#a7e9fb;
+			color:black;
+			text-align:center;
+		</style>
 
 
 
@@ -23,16 +24,18 @@
 					<span class="icon solid major fa-cloud" style="top:-40px"></span>
 				</div>
 
-			</section>
-        {% with messages = get_flashed_messages() %}
-                   {% if messages %}
-				   <ul class=flashes>
+	   </section>
+              {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+	          <div class="flash-message">
+		   <ul class=flashes>
                      {% for message in messages %}
-					   <li>{{ message }}</li>
+		        {{ message }}
                      {% endfor %}
                    </ul>
-                   {% endif %}
-			{% endwith %}
+		 </div>
+                 {% endif %}
+              {% endwith %}
 {% block content %}
 {% endblock %}
 
