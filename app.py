@@ -352,7 +352,7 @@ def mark_attendance():
     current_day = datetime.today().weekday()
     # 0 is monday and 6 is sunday
 
-    # if the time doesnt fall into any of the slots mentioned, it will skip
+    # if the time doesn't fall into any of the slots mentioned, it will skip
     # the rest of the function
     if period:
 
@@ -657,12 +657,15 @@ def add_new_student():
         s = Student()
         student_image = s.query.filter_by(student_id=student_id).first()
         # removes the image of the student
-        os.remove(
-            f'static/images/Students_and_Teachers/{student_image.first_name} {student_image.last_name}.{student_id}.jpg')
-        # removes student details from database
-        s.remove_student(student_id=student_id)
-        l = StudentLogins()
-        l.remove(student_id=student_id)
+        if student_image:
+            os.remove(
+                f'static/images/Students_and_Teachers/{student_image.first_name} {student_image.last_name}.{student_id}.jpg')
+            # removes student details from database
+            s.remove_student(student_id=student_id)
+            l = StudentLogins()
+            l.remove(student_id=student_id)
+        else:
+            flash('Student ID not found')
 
         return render_template('home.html')
 
@@ -731,10 +734,13 @@ def add_new_teacher():
         teacher_id = form.teacher_id.data
         t = Teacher()
         teacher_image = t.query.filter_by(teacher_id=teacher_id).first()
-        os.remove(
-            f'static/images/Students_and_Teachers/{teacher_image.first_name} {teacher_image.last_name}.{teacher_image}.jpg')
+        if teacher_image:
+            os.remove(
+                f'static/images/Students_and_Teachers/{teacher_image.first_name} {teacher_image.last_name}.{teacher_image}.jpg')
 
-        t.remove_teacher(teacher_id=teacher_id)
+            t.remove_teacher(teacher_id=teacher_id)
+        else:
+            flash('Student ID not found')
         return render_template('home.html')
     return render_template('add_new_teacher.html', form=form, remove_form=remove_form)
 
