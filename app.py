@@ -593,9 +593,8 @@ def view_student_attendance():
                                    total_no_of_classes=total_no_of_classes)
         else:
             flash('No attendance found for the student')
-            return render_template('view_student_attendance.html',
-                                   student_attendance_form=student_attendance_form)
-
+            return render_template('home.html')
+      
     return render_template('view_student_attendance.html',
                            student_attendance_form=student_attendance_form)
 
