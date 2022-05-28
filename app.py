@@ -347,7 +347,7 @@ def mark_attendance():
         period = '2nd-period'
     if '12:00:00' <= current_time < '13:30:00':
         period = '3rd-period'
-    if '14:30:00' <= current_time < '21:00:00':
+    if '14:30:00' <= current_time < '16:00:00':
         period = '4th-period'
     current_day = datetime.today().weekday()
     # 0 is monday and 6 is sunday
