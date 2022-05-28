@@ -566,7 +566,7 @@ def return_home():
     return render_template('home.html')
 
 
-# used by by student and teachers to view students' attendance
+# used by  teachers to view students' attendance
 @app.route('/view_student_attendance', methods=["GET", "POST"])
 def view_student_attendance():
     student_attendance_form = StudentAttendance()
@@ -593,8 +593,7 @@ def view_student_attendance():
                                    total_no_of_classes=total_no_of_classes)
         else:
             flash('No attendance found for the student')
-            return render_template('view_student_attendance.html',
-                                   student_attendance_form=student_attendance_form)
+            return render_template('home.html')
       
     return render_template('view_student_attendance.html',
                            student_attendance_form=student_attendance_form)
@@ -619,6 +618,39 @@ def view_class_attendance():
             return render_template('class_attendance.html', all_students_present=students_present_on_date, date=date)
 
     return render_template('view_class_attendance.html', class_attendance_form=class_attendance_form)
+
+
+# used by student  to view their attendance
+@app.route('/view_my_attendance', methods=["GET", "POST"])
+def view_my_attendance():
+    student_attendance_form = StudentAttendance()
+    if student_attendance_form.validate_on_submit():
+        student_id_required = student_attendance_form.student_id.data
+        subject = student_attendance_form.subject.data
+        no_of_classes = Attendance.query.filter_by(student_id=student_id_required, subject=subject).all()
+        details = Student.query.filter_by(student_id=student_id_required).first()
+        if details and no_of_classes:
+            total_no_of_classes = ''
+            semester = details.semester
+            branch = details.branch
+
+            classes_attended = Attendance.query.filter_by(student_id=student_id_required, subject=subject)
+            classes = Teacher.query.filter_by(class_handled=subject, semester=semester,
+                                              branch=branch).first()
+            if classes:
+                total_no_of_classes = classes.no_of_classes
+
+            name = Attendance.query.filter_by(student_id=student_id_required).first()
+            no_of_classes_attended = len(no_of_classes)
+            return render_template('my_attendance.html', all_classes_attended=classes_attended,
+                                   name=name, no_of_classes_attended=no_of_classes_attended,
+                                   total_no_of_classes=total_no_of_classes)
+        else:
+            flash('No attendance found for the student')
+            return render_template('student_home.html')
+
+    return render_template('view_student_attendance.html',
+                           student_attendance_form=student_attendance_form)
 
 
 # when faculty member is registering the student during admission process
