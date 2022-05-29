@@ -773,7 +773,7 @@ def add_new_teacher():
 
             t.remove_teacher(teacher_id=teacher_id)
         else:
-            flash('Student ID not found')
+            flash('Teacher ID not found')
         return render_template('home.html')
     return render_template('add_new_teacher.html', form=form, remove_form=remove_form)
 
