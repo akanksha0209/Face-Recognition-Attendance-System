@@ -15,3 +15,4 @@ Be sure to install all the packages mentioned in requirements.txt file   <br/>
 7) the credentials for student login is the registered student_id as username and password is in the format of their {first_name}{dob}{last_name}.  <br/>
 Note : Only 2 out of 10 teachers have been registered. The others can be registered by matching their teacher id with the branch , subject from the time table.
 Please note vuong184 is the username which appears when I commit and push to this repository from PyCharm(the IDE I used to build this project).
+Carefully make a note of the class timings and other details from time table before taking attendance 
